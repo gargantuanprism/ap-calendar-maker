@@ -85,7 +85,7 @@ async function render(argv){
     title: events[0].date.toFormat('LLLL yyyy')
   }
 
-  console.log(tpl({events: pages[argv.page - 1], info}))
+  console.log(tpl({pages, info}))
 }
 
 function generateIcs(argv){

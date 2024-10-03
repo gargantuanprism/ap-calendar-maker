@@ -13,18 +13,21 @@ html
     #main
       #title.bold= info.title
 
-      #grid-container
-        each e in events
-          .grid-row(style='color: ' + e.color)
-            .grid-item
-              .small= e.dow
-              .day.bold= e.day
-            .grid-item
-              .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
-            .grid-item.event-title
-              .small= e.type
-              .bold(style='font-size: ' + e.size)= e.name
-            .grid-item.time.bold
-              div= e.start
-              div= e.end
+      each page in pages
+        #grid-container
+          each e in page
+            .grid-row(style='color: ' + e.color)
+              .grid-item
+                .small= e.dow
+                .day.bold= e.day
+              .grid-item
+                .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
+              .grid-item.event-title
+                .small= e.type
+                .bold(style='font-size: ' + e.size)= e.name
+              .grid-item.time.bold
+                div= e.start
+                div= e.end
+
+        div &nbsp;
 
