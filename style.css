@@ -1,0 +1,62 @@
+@media print {
+  body {
+    background-color: black;
+  }
+}
+
+body {
+  background-color: black;
+  font-family: 'Din Condensed';
+  text-transform: uppercase;
+}
+
+#main {
+  width: 1080px;
+  height: 1080px;
+}
+
+#title {
+  color: white;
+  font-size: 55pt;
+  padding: 1rem;
+}
+
+#grid-container {
+  border-radius: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  max-width: 1000px;
+  max-height: 900px;
+  margin-left: 1rem;
+}
+
+.grid-row {
+  display: grid;
+  grid-template-columns: 4rem 7rem 46rem 4rem;
+}
+
+.small {
+  font-size: 1.6em;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.event-title {
+  margin-left: 1rem;
+}
+
+.time {
+  font-size: 2em;
+}
+
+.icon {
+  margin: auto;
+  max-width: 5.5rem;
+}
+
+.day {
+  font-size: 4em;
+}
+

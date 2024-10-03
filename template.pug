@@ -1,0 +1,30 @@
+doctype html
+
+html
+  head
+    title= info.title
+    link(rel='stylesheet' href='../style.css')
+    link(rel='preconnect' href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet")
+    link(rel="stylesheet" href="https://use.typekit.net/txn7htm.css")
+
+  body
+    #main
+      #title.bold= info.title
+
+      #grid-container
+        each e in events
+          .grid-row(style='color: ' + e.color)
+            .grid-item
+              .small= e.dow
+              .day.bold= e.day
+            .grid-item
+              .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
+            .grid-item.event-title
+              .small= e.type
+              .bold(style='font-size: ' + e.size)= e.name
+            .grid-item.time.bold
+              div= e.start
+              div= e.end
+
