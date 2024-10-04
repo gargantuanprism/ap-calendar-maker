@@ -56,11 +56,16 @@ async function render(argv){
       titleSize = MIN_TITLE_SIZE
     }
 
+    let eventType = row.TYPE
+    if (row.SUBTYPE){
+      eventType += ` - ${row.SUBTYPE}`
+    }
+
     return {
       date,
       dow: date.toFormat('ccc'),
       day: date.toFormat('d'),
-      type: row.TYPE,
+      type: eventType,
       name: row.TITLE,
       icon,
       start: row.END ? `${start}-`: start,
@@ -97,6 +102,15 @@ function generateIcs(argv){
     let end = row.END ? DateTime.fromISO(row['END']): start.plus({hours: 2})
     let diff = end.diff(start, ['hours', 'minutes'])
 
+    if (argv.internal){
+      return {
+        title: row.NAME,
+        start: [date.year, date.month, date.day, start.hour, start.minute],
+        duration: {hours: diff.hours, minutes: diff.minutes},
+        location: row.LOCATION
+      }
+    }
+
     return {
       title:`[${row.TYPE}] ${row.NAME}`,
       start: [date.year, date.month, date.day, start.hour, start.minute],
@@ -114,8 +128,7 @@ async function run(){
   await require('yargs')
     .command('render <csv>', '', {}, render)
     .command('ics <csv>', '', {}, generateIcs)
-    .option('page', {type: Number, default: 1})
-    .option('no-title', {type: Boolean})
+    .option('internal', {type: 'boolean', default: false})
     .parse()
 }
 

@@ -18,26 +18,27 @@ body {
 
 #title {
   color: white;
-  font-size: 55pt;
+  font-size: 7rem;
   padding: 1rem;
 }
 
 #grid-container {
   border-radius: 1.5rem;
-  padding: 1rem;
+  padding: 2rem;
   background-color: white;
-  max-width: 1000px;
-  max-height: 900px;
   margin-left: 1rem;
 }
 
 .grid-row {
   display: grid;
   grid-template-columns: 4rem 7rem 46rem 4rem;
+  max-height: 7rem;
+  align-items: center;
+  margin-bottom: 0.25rem;
 }
 
 .small {
-  font-size: 1.6em;
+  font-size: 2em;
 }
 
 .bold {
@@ -46,10 +47,11 @@ body {
 
 .event-title {
   margin-left: 1rem;
+  align-self: baseline;
 }
 
 .time {
-  font-size: 2em;
+  font-size: 2.3em;
 }
 
 .icon {
@@ -58,6 +60,6 @@ body {
 }
 
 .day {
-  font-size: 4em;
+  font-size: 5em;
 }
 
