@@ -56,10 +56,14 @@ async function render(argv){
       titleSize = MIN_TITLE_SIZE
     }
 
+    let marginSize = titleSize / 8.5
+
     let eventType = row.TYPE
     if (row.SUBTYPE){
       eventType += ` - ${row.SUBTYPE}`
     }
+
+    let color = row.HEX === 'random' ? randomColor({luminosity: 'dark'}) : row.HEX
 
     return {
       date,
@@ -70,8 +74,9 @@ async function render(argv){
       icon,
       start: row.END ? `${start}-`: start,
       end: row.END ? DateTime.fromISO(row.END).toFormat('h:mma'): '',
-      color: row.HEX,
-      size: `${titleSize}em`
+      color,
+      size: `${titleSize}em`,
+      marginSize: `${marginSize}em`
     }
 
 //    let driveId = row.ICON.match(DRIVE_ID_REGEX)[1]
@@ -84,7 +89,7 @@ async function render(argv){
 //    })
   })
 
-  let pages = _.chunk(events, PER_PAGE)
+  let pages = _.chunk(events, argv.pageSize)
 
   let info = {
     title: events[0].date.toFormat('LLLL yyyy')
@@ -104,7 +109,7 @@ function generateIcs(argv){
 
     if (argv.internal){
       return {
-        title: row.NAME,
+        title: row.TITLE,
         start: [date.year, date.month, date.day, start.hour, start.minute],
         duration: {hours: diff.hours, minutes: diff.minutes},
         location: row.LOCATION
@@ -112,7 +117,7 @@ function generateIcs(argv){
     }
 
     return {
-      title:`[${row.TYPE}] ${row.NAME}`,
+      title:`[${row.TYPE}] ${row.TITLE}`,
       start: [date.year, date.month, date.day, start.hour, start.minute],
       duration: {hours: diff.hours, minutes: diff.minutes},
       description: row.DESC,
@@ -129,6 +134,7 @@ async function run(){
     .command('render <csv>', '', {}, render)
     .command('ics <csv>', '', {}, generateIcs)
     .option('internal', {type: 'boolean', default: false})
+    .option('page-size', {type: 'number', default: PER_PAGE})
     .parse()
 }
 
