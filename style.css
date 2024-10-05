@@ -31,10 +31,10 @@ body {
 
 .grid-row {
   display: grid;
-  grid-template-columns: 4rem 7rem 46rem 4rem;
+  grid-template-columns: 4rem 7rem 46rem 6rem;
   max-height: 7rem;
   align-items: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
 }
 
 .small {
@@ -61,5 +61,9 @@ body {
 
 .day {
   font-size: 5em;
+}
+
+.spacer {
+  max-height: 0.6em;
 }
 

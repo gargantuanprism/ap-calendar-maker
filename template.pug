@@ -8,9 +8,9 @@ html
 
   body
     #main
-      #title.bold= info.title
-
       each page in pages
+        #title.bold= info.title
+
         #grid-container
           each e in page
             .grid-row(style='color: ' + e.color)
@@ -21,6 +21,8 @@ html
                 .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
               .grid-item.event-title
                 .type.small= e.type
+                if (e.size === info.minTitleSize)
+                  div.spacer &nbsp;
                 .name.bold(style='font-size: ' + e.size)= e.name
               .grid-item.time.bold
                 div= e.start

@@ -17,8 +17,8 @@ const xml2js = require('xml2js')
 const PER_PAGE = 8
 const DRIVE_ID_REGEX = /d\/(.+)\/view/
 const ICON_PATH = path.join(__dirname, 'icons')
-const MAX_TITLE_SIZE = 4.7
-const MIN_TITLE_SIZE = 2.5
+const MAX_TITLE_SIZE = 5.0
+const MIN_TITLE_SIZE = 2.6
 
 async function render(argv){
   let tpl = pug.compileFile('template.pug', {pretty: true})
@@ -48,7 +48,7 @@ async function render(argv){
       console.warn(`Icon not found: ${row.ICON}`)
     }
 
-    let titleSize = -0.1671533 * row.TITLE.length + 8.5
+    let titleSize = -0.1671533 * row.TITLE.length + 8.8
     if (titleSize > MAX_TITLE_SIZE){
       titleSize = MAX_TITLE_SIZE
     }
@@ -56,7 +56,7 @@ async function render(argv){
       titleSize = MIN_TITLE_SIZE
     }
 
-    let marginSize = titleSize / 8.5
+    let spacerSize = titleSize / 8.5
 
     let eventType = row.TYPE
     if (row.SUBTYPE){
@@ -76,7 +76,7 @@ async function render(argv){
       end: row.END ? DateTime.fromISO(row.END).toFormat('h:mma'): '',
       color,
       size: `${titleSize}em`,
-      marginSize: `${marginSize}em`
+      spacerSize: `${spacerSize}em`
     }
 
 //    let driveId = row.ICON.match(DRIVE_ID_REGEX)[1]
@@ -92,7 +92,8 @@ async function render(argv){
   let pages = _.chunk(events, argv.pageSize)
 
   let info = {
-    title: pages[0][0].date.toFormat('LLLL yyyy')
+    title: pages[0][0].date.toFormat('LLLL yyyy'),
+    minTitleSize: `${MIN_TITLE_SIZE}em`
   }
 
   console.log(tpl({pages, info}))
