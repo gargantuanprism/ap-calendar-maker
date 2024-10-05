@@ -92,7 +92,7 @@ async function render(argv){
   let pages = _.chunk(events, argv.pageSize)
 
   let info = {
-    title: events[0].date.toFormat('LLLL yyyy')
+    title: pages[0][0].date.toFormat('LLLL yyyy')
   }
 
   console.log(tpl({pages, info}))
