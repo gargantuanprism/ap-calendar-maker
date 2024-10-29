@@ -1,32 +1,28 @@
-@media print {
-  body {
-    background-color: black;
-  }
-}
-
 body {
   background-color: black;
-  background-image: url(./bkg/bkg.jpg);
   font-family: 'Din Condensed';
   text-transform: uppercase;
+  margin: 0;
+  max-width: 1105px;
 }
 
 #main {
-  width: 1080px;
-  height: 1080px;
+  background-image: url(./bkg/bkg.jpg);
 }
 
-#title {
+.title {
   color: white;
   font-size: 7rem;
   padding: 1rem;
 }
 
-#grid-container {
+.grid-container {
   border-radius: 1.5rem;
   padding: 2rem;
   background-color: white;
   margin-left: 1rem;
+  min-height: 940px;
+  width: 1010px;
 }
 
 .grid-row {

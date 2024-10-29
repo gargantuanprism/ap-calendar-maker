@@ -9,9 +9,9 @@ html
   body
     #main
       each page in pages
-        #title.bold= info.title
+        .title.bold= info.title
 
-        #grid-container
+        .grid-container
           each e in page
             .grid-row(style='color: ' + e.color)
               .grid-item

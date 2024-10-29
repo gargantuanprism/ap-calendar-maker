@@ -34,6 +34,8 @@ async function render(argv){
 
       let parser = new xml2js.Parser()
       let svgData = await parser.parseStringPromise(icon)
+
+      // remove fill, height, width, and style
       delete svgData.svg['$'].fill
       delete svgData.svg['$'].height
       delete svgData.svg['$'].width
@@ -63,7 +65,7 @@ async function render(argv){
       eventType += ` - ${row.SUBTYPE}`
     }
 
-    let color = row.HEX === 'random' ? randomColor({luminosity: 'dark'}) : row.HEX
+    let color = _.isEmpty(row.HEX) ? randomColor({luminosity: 'dark'}): row.HEX
 
     return {
       date,
@@ -90,6 +92,10 @@ async function render(argv){
   })
 
   let pages = _.chunk(events, argv.pageSize)
+
+  if (argv.page){
+    pages = [pages[argv.page - 1]]
+  }
 
   let info = {
     title: pages[0][0].date.toFormat('LLLL yyyy'),
@@ -127,7 +133,13 @@ function generateIcs(argv){
   })
 
   let {error, value} = ics.createEvents(events)
-  console.log(value)
+
+  if (error){
+    console.error(error)
+  }
+  else {
+    console.log(value)
+  }
 }
 
 async function run(){
@@ -136,6 +148,7 @@ async function run(){
     .command('ics <csv>', '', {}, generateIcs)
     .option('internal', {type: 'boolean', default: false})
     .option('page-size', {type: 'number', default: PER_PAGE})
+    .option('page', {type: 'number'})
     .parse()
 }
 
