@@ -11,7 +11,7 @@ wget -qO $csv "$url"
 
 echo $url
 
-num_events="$(cat $csv | wc -l)"
+num_events="$(csvstat --count $csv)"
 num_pages=$(((num_events / PER_PAGE) + 1))
 
 for i in $(seq $num_pages); do
