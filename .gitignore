@@ -1,5 +1,7 @@
 node_modules
 out/*.html
 out/*.ics
+out/*.csv
+out/*.png
 csv/*.csv
 
