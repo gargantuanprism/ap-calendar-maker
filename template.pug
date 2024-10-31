@@ -21,9 +21,15 @@ html
                 .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
               .grid-item.event-title
                 .type.small= e.type
+
                 if (e.size === info.minTitleSize)
                   div.spacer &nbsp;
+
                 .name.bold(style='font-size: ' + e.size)= e.name
+
+                if (e.subtitle)
+                  .subtitle.bold(style='font-size: ' + e.size)= e.subtitle
+
               .grid-item.time.bold
                 div= e.start
                 div= e.end

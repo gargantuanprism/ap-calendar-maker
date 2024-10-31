@@ -54,7 +54,7 @@ async function render(argv){
     if (titleSize > MAX_TITLE_SIZE){
       titleSize = MAX_TITLE_SIZE
     }
-    if (titleSize < MIN_TITLE_SIZE){
+    if (titleSize < MIN_TITLE_SIZE || row.SUBTITLE){
       titleSize = MIN_TITLE_SIZE
     }
 
@@ -73,6 +73,7 @@ async function render(argv){
       day: date.toFormat('d'),
       type: eventType,
       name: row.TITLE,
+      subtitle: row.SUBTITLE,
       icon,
       start: row.END ? `${start}-`: start,
       end: row.END ? DateTime.fromISO(row.END).toFormat('h:mma'): '',
