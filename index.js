@@ -16,7 +16,7 @@ const xml2js = require('xml2js')
 
 const PER_PAGE = 8
 const DRIVE_ID_REGEX = /d\/(.+)\/view/
-const ICON_PATH = path.join(__dirname, 'icons')
+const ICONS_PATH = path.join(__dirname, 'icons')
 const MAX_TITLE_SIZE = 5.0
 const MIN_TITLE_SIZE = 2.6
 
@@ -27,24 +27,30 @@ async function render(argv){
   let events = await Promise.mapSeries(rows, async row => {
     let date = DateTime.fromISO(row.DATE)
     let start = DateTime.fromISO(row['START']).toFormat('h:mma')
-    let icon
+    let iconPath = `${ICONS_PATH}/${row.ICON}`
+    let svgIcon, imageIcon
 
-    if (fs.accessSync(`${ICON_PATH}/${row.ICON}.svg`, fs.constants.R_OK) == null){
-      icon = fs.readFileSync(`${ICON_PATH}/${row.ICON}.svg`)
+    if (fs.accessSync(`${ICONS_PATH}/${row.ICON}`, fs.constants.R_OK) == null){
+      if (iconPath.endsWith('.svg')){
+        svgIcon = fs.readFileSync(`${ICONS_PATH}/${row.ICON}`)
 
-      let parser = new xml2js.Parser()
-      let svgData = await parser.parseStringPromise(icon)
+        let parser = new xml2js.Parser()
+        let svgData = await parser.parseStringPromise(svgIcon)
 
-      // remove fill, height, width, and style
-      delete svgData.svg['$'].fill
-      delete svgData.svg['$'].height
-      delete svgData.svg['$'].width
-      delete svgData.svg['$'].style
-      delete svgData.svg.style
-      _.set(svgData, 'svg.path[0].$.fill', null)
+        // remove fill, height, width, and style
+        delete svgData.svg['$'].fill
+        delete svgData.svg['$'].height
+        delete svgData.svg['$'].width
+        delete svgData.svg['$'].style
+        delete svgData.svg.style
+        _.set(svgData, 'svg.path[0].$.fill', null)
 
-      let builder = new xml2js.Builder()
-      icon = builder.buildObject(svgData)
+        let builder = new xml2js.Builder()
+        svgIcon = builder.buildObject(svgData)
+      }
+      else {
+        imageIcon = iconPath
+      }
     }
     else {
       console.warn(`Icon not found: ${row.ICON}`)
@@ -65,7 +71,7 @@ async function render(argv){
       eventType += ` - ${row.SUBTYPE}`
     }
 
-    let color = _.isEmpty(row.HEX) ? randomColor({luminosity: 'dark'}): row.HEX
+    let color = _.isEmpty(row.COLOR) ? randomColor({luminosity: 'dark'}): row.COLOR
 
     return {
       date,
@@ -74,7 +80,8 @@ async function render(argv){
       type: eventType,
       name: row.TITLE,
       subtitle: row.SUBTITLE,
-      icon,
+      svgIcon: svgIcon || null,
+      imageIcon: imageIcon || null,
       start: row.END ? `${start}-`: start,
       end: row.END ? DateTime.fromISO(row.END).toFormat('h:mma'): '',
       color,

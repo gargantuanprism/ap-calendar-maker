@@ -12,15 +12,17 @@ body {
 
 .title {
   color: white;
-  font-size: 7rem;
-  padding: 1rem;
+  font-size: 6.5rem;
+  padding: 0.5rem 0.75rem 0 1.5rem;
+  margin-bottom: -1.25rem;
 }
 
 .grid-container {
   border-radius: 1.5rem;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: white;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
+  margin: auto;
   min-height: 940px;
   width: 1010px;
 }
@@ -53,6 +55,11 @@ body {
 .icon {
   margin: auto;
   max-width: 5.5rem;
+}
+
+img.icon {
+  display: block;
+  padding-bottom: 1em;
 }
 
 .day {

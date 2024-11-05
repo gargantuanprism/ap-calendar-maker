@@ -18,7 +18,10 @@ html
                 .small= e.dow
                 .day.bold= e.day
               .grid-item
-                .icon(style='fill: ' + e.color + ' !important;') !{e.icon}
+                if (e.svgIcon)
+                  .icon(style='fill: ' + e.color + ' !important;') !{e.svgIcon}
+                if (e.imageIcon)
+                  img.icon(src=e.imageIcon)
               .grid-item.event-title
                 .type.small= e.type
 
